@@ -7,6 +7,8 @@ import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
 
+import android.util.Log;
+
 public class HttpUtil {
 	
 	public static void sendHttpRequest(final String address,final HttpCallbackListener listener){
@@ -16,6 +18,7 @@ public class HttpUtil {
 				// TODO Auto-generated method stub
 				HttpURLConnection connection=null;
 				try{
+					//Log.d("!!!!!!!!!!!!!!", address);
 					URL url=new URL(address);
 					connection=(HttpURLConnection)url.openConnection();
 					connection.setRequestMethod("GET");
