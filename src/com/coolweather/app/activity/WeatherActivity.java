@@ -2,6 +2,11 @@ package com.coolweather.app.activity;
 
 
 
+import ofs.ahd.dii.AdManager;
+import ofs.ahd.dii.br.AdSize;
+import ofs.ahd.dii.br.AdView;
+
+import com.coolweather.app.server.AutoUpdateService;
 import com.coolweather.app.util.HttpCallbackListener;
 import com.coolweather.app.util.HttpUtil;
 import com.coolweather.app.util.Utility;
@@ -29,6 +34,7 @@ public class WeatherActivity extends Activity implements android.view.View.OnCli
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+		AdManager.getInstance(this).init("b633e3874c2c9667","12c7c1ff7b579a4e",false);
 		setContentView(R.layout.weather_layout);
 		tv_city_name=(TextView)findViewById(R.id.tv_city_name);
 		tv_current_data=(TextView)findViewById(R.id.tv_current_data);
@@ -53,6 +59,10 @@ public class WeatherActivity extends Activity implements android.view.View.OnCli
 		btn_refresh_weather=(Button)findViewById(R.id.btn_refresh_weather);
 		btn_refresh_weather.setOnClickListener(this);
 		btn_switch_city.setOnClickListener(this);
+		
+		AdView adView=new AdView(this,AdSize.FIT_SCREEN);
+		LinearLayout adLayout=(LinearLayout)findViewById(R.id.adLayout);
+		adLayout.addView(adView);
 	}
 	
 	@Override
@@ -161,6 +171,8 @@ public class WeatherActivity extends Activity implements android.view.View.OnCli
 		tv_current_data.setText(prefs.getString("current_data", ""));
 		ll_weather_info.setVisibility(View.VISIBLE);
 		tv_city_name.setVisibility(View.VISIBLE);
+		Intent intent =new Intent(this,AutoUpdateService.class);
+		startService(intent);
 	}
 
 //	@Override
